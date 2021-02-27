@@ -27,5 +27,5 @@ export default {
         creep.say(globals.MSG_ERR_SOURCE_NOT_FOUND);
       }
     }
-  }
+  },
 };

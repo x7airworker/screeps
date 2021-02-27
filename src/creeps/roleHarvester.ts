@@ -11,7 +11,7 @@ export default {
       const targets: any[] = creep.room.find(FIND_STRUCTURES, {
         filter: struct => {
           return struct.structureType === STRUCTURE_SPAWN;
-        }
+        },
       });
 
       for (const target of targets) {
@@ -19,5 +19,5 @@ export default {
           creep.moveTo(target, { visualizePathStyle: { stroke: "000000" } });
       }
     }
-  }
+  },
 };
