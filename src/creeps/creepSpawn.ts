@@ -18,7 +18,7 @@ export default function (): void {
       .filter({ memory: { role: globals.ROLE_UPGRADER } })
       .size() < 3
   )
-    Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE, MOVE], `Upgrader_${uuid()}`, {
+    Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], `Upgrader_${uuid()}`, {
       memory: { role: globals.ROLE_UPGRADER }
     });
 }
