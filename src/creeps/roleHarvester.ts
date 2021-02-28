@@ -1,11 +1,17 @@
+import globals from "core/globals";
+
 export default {
   run(creep: Creep): void {
     if (creep.store.getFreeCapacity() > 0) {
-      const sources: any[] = creep.room.find(FIND_SOURCES);
+      const source: Source | null = creep.pos.findClosestByPath(FIND_SOURCES);
 
-      for (const source of sources) {
-        if (creep.harvest(source) === ERR_NOT_IN_RANGE)
-          creep.moveTo(source, { visualizePathStyle: { stroke: "000000" } });
+      if (!source) {
+        creep.say(globals.MSG_ERR_SOURCE_NOT_FOUND);
+      } else {
+        creep.say(globals.MSG_HARVEST);
+        if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(source, { visualizePathStyle: { stroke: "#ffffff" } });
+        }
       }
     } else {
       const targets: any[] = creep.room.find(FIND_STRUCTURES, {
@@ -15,8 +21,9 @@ export default {
       });
 
       for (const target of targets) {
+        creep.say(globals.MSG_WORKING);
         if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE)
-          creep.moveTo(target, { visualizePathStyle: { stroke: "000000" } });
+          creep.moveTo(target, { visualizePathStyle: { stroke: "#ffffff" } });
       }
     }
   },
