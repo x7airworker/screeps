@@ -12,14 +12,14 @@ export default {
     if (creep.memory.working) {
       const structure: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
-      const upgradables = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
+      const repariables = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
 
-      upgradables.sort((a, b) => a.hits - b.hits);
+      repariables.sort((a, b) => a.hits - b.hits);
 
-      if (upgradables) {
-        for (const upgradable of upgradables) {
-          if (creep.repair(upgradable) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(upgradable, { visualizePathStyle: { stroke: "#0f111a" } });
+      if (repariables) {
+        for (const repariable of repariables) {
+          if (creep.repair(repariable) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(repariable, { visualizePathStyle: { stroke: "#0f111a" } });
           }
         }
       } else if (structure) {
