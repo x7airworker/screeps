@@ -26,9 +26,9 @@ export default function (): void {
   if (
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_BUILDER } })
-      .size() < 5
+      .size() < 10
   )
-    Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, MOVE], `Builder_${uuid()}`, {
+    Game.spawns.Spawn1.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE], `Builder_${uuid()}`, {
       memory: { role: globals.ROLE_BUILDER, working: false },
     });
 }
