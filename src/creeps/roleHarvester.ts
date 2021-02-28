@@ -16,7 +16,7 @@ export default {
     } else {
       const targets: any[] = creep.room.find(FIND_STRUCTURES, {
         filter: struct => {
-          return struct.structureType === STRUCTURE_SPAWN;
+          return struct.structureType === STRUCTURE_SPAWN || STRUCTURE_EXTENSION;
         },
       });
 
