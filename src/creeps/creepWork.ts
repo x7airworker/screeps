@@ -1,4 +1,5 @@
 import globals from "core/globals";
+import roleBuilder from "./roleBuilder";
 import roleHarvester from "./roleHarvester";
 import roleUpgrader from "./roleUpgrader";
 
@@ -12,6 +13,9 @@ export default function (): void {
         break;
       case globals.ROLE_UPGRADER:
         roleUpgrader.run(creep);
+        break;
+      case globals.ROLE_BUILDER:
+        roleBuilder.run(creep);
         break;
 
       default:
