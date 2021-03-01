@@ -29,8 +29,6 @@ export default {
           creep.moveTo(structure, { visualizePathStyle: { stroke: globals.COLOR_BUILDER } });
         }
       } else if (repairables.length) {
-        console.log(repairables[0].hitsMax - repairables[0].hits);
-
         creep.say(globals.MSG_WORKING);
         if (creep.repair(repairables[0]) === ERR_NOT_IN_RANGE) {
           creep.moveTo(repairables[0], { visualizePathStyle: { stroke: globals.COLOR_BUILDER } });
