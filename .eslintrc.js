@@ -2,7 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    node: true
+    node: true,
   },
   extends: [
     "eslint:recommended",
@@ -12,21 +12,21 @@ module.exports = {
     "prettier/@typescript-eslint",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "tsconfig.json",
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["@typescript-eslint", "import"],
   settings: {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [".ts", ".tsx"],
     },
     "import/resolver": {
-      typescript: {}
-    }
+      typescript: {},
+    },
   },
   rules: {
     "@typescript-eslint/array-type": "error",
@@ -36,8 +36,8 @@ module.exports = {
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
       {
-        accessibility: "explicit"
-      }
+        accessibility: "explicit",
+      },
     ],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-parameter-properties": "off",
@@ -70,8 +70,8 @@ module.exports = {
     "no-shadow": [
       "error",
       {
-        hoist: "all"
-      }
+        hoist: "all",
+      },
     ],
     "no-throw-literal": "error",
     "no-trailing-spaces": "off",
@@ -81,8 +81,9 @@ module.exports = {
     "object-shorthand": "error",
     "one-var": ["error", "never"],
     "quote-props": "off",
+    "no-console": "warn",
     radix: "error",
     "sort-imports": "off",
     "spaced-comment": "error",
-  }
+  },
 };
