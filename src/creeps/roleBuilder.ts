@@ -12,15 +12,11 @@ export default {
     if (creep.memory.working) {
       const structure: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
-      let repairables: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
-        filter: c => c.hits < c.hitsMax && c.hitsMax - c.hits < creep.store.getCapacity() * 2,
+      const repairables: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
+        filter: c => c.hits < c.hitsMax,
       });
 
-      if (!repairables.length) {
-        repairables = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
-      }
-
-      repairables.sort((a, b) => a.hits - b.hits);
+      repairables.sort((a, b) => a.hitsMax - a.hits - b.hitsMax - b.hits);
 
       if (structure) {
         creep.say(globals.MSG_WORKING);
