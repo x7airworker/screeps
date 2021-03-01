@@ -1,4 +1,5 @@
 import globals from "core/globals";
+import creepFarm from "./creepFarm";
 
 export default {
   run(creep: Creep): void {
@@ -9,36 +10,31 @@ export default {
       creep.memory.working = true;
     }
 
-    if (creep.memory.working) {
+    if (!creep.memory.working) {
+      creepFarm(creep, globals.COLOR_BUILDER);
+    } else {
       const structure: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
-      const repairables: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
-        filter: c => c.hits < c.hitsMax,
-      });
-
-      repairables.sort((a, b) => a.hitsMax - a.hits - b.hitsMax - b.hits);
+      const repairables: AnyStructure[] | undefined = creep.room
+        .find(FIND_STRUCTURES, {
+          filter: c => c.hits < c.hitsMax,
+        })
+        .sort((a, b) => {
+          return a.hitsMax - b.hitsMax;
+        });
 
       if (structure) {
         creep.say(globals.MSG_WORKING);
         if (creep.build(structure) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
+          creep.moveTo(structure, { visualizePathStyle: { stroke: globals.COLOR_BUILDER } });
         }
       } else if (repairables.length) {
+        console.log(repairables[0].hitsMax - repairables[0].hits);
+
         creep.say(globals.MSG_WORKING);
         if (creep.repair(repairables[0]) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(repairables[0], { visualizePathStyle: { stroke: "#0f111a" } });
+          creep.moveTo(repairables[0], { visualizePathStyle: { stroke: globals.COLOR_BUILDER } });
         }
-      }
-    } else {
-      const source: Source | null | undefined = creep.pos.findClosestByRange(FIND_SOURCES);
-
-      if (source instanceof Source) {
-        creep.say(globals.MSG_HARVEST);
-        if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source, { visualizePathStyle: { stroke: "#fe4151" } });
-        }
-      } else {
-        creep.say(globals.MSG_ERR_NOT_FOUND);
       }
     }
   },

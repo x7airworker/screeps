@@ -1,4 +1,5 @@
 import globals from "core/globals";
+import creepFarm from "./creepFarm";
 
 export default {
   run(creep: Creep): void {
@@ -10,16 +11,7 @@ export default {
     }
 
     if (!creep.memory.working) {
-      const source: Source | null = creep.pos.findClosestByPath(FIND_SOURCES);
-
-      if (!source) {
-        creep.say(globals.MSG_ERR_NOT_FOUND);
-      } else {
-        creep.say(globals.MSG_HARVEST);
-        if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source, { visualizePathStyle: { stroke: "#ffffff" } });
-        }
-      }
+      creepFarm(creep, globals.COLOR_HARVESTER);
     } else {
       // TODO: FIX THIS ABOMINATION
       const targets: any[] | undefined = creep.room.find<any>(FIND_STRUCTURES, {
@@ -40,7 +32,7 @@ export default {
       if (targets.length) {
         creep.say(globals.MSG_WORKING);
         if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0], { visualizePathStyle: { stroke: "#ffffff" } });
+          creep.moveTo(targets[0], { visualizePathStyle: { stroke: globals.COLOR_HARVESTER } });
         }
       }
     }

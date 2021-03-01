@@ -1,4 +1,5 @@
 import globals from "core/globals";
+import creepFarm from "./creepFarm";
 
 export default {
   run(creep: Creep): void {
@@ -9,26 +10,14 @@ export default {
       creep.memory.working = true;
     }
 
-    if (creep.memory.working) {
+    if (!creep.memory.working) {
+      creepFarm(creep, globals.COLOR_UPGRADER);
+    } else {
       if (creep.room.controller) {
         creep.say(globals.MSG_WORKING);
         if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: "#0f111a" } });
+          creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: globals.COLOR_UPGRADER } });
         }
-      }
-    } else {
-      if (!creep.room.controller) {
-        return;
-      }
-      const source: Source | null = creep.room.controller.pos.findClosestByRange(FIND_SOURCES);
-
-      if (source) {
-        creep.say(globals.MSG_HARVEST);
-        if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source, { visualizePathStyle: { stroke: "#0f111a" } });
-        }
-      } else {
-        creep.say(globals.MSG_ERR_NOT_FOUND);
       }
     }
   },
