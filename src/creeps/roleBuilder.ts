@@ -23,16 +23,18 @@ export default {
       repairables.sort((a, b) => a.hits - b.hits);
 
       if (structure) {
+        creep.say(globals.MSG_WORKING);
         if (creep.build(structure) === ERR_NOT_IN_RANGE) {
           creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
         }
-      } else if (repairables.length) {
+      } else if (repairables) {
         let target: AnyStructure = repairables[0];
         for (const repariable of repairables) {
           if (creep.pos.getRangeTo(repariable) < creep.pos.getRangeTo(target)) {
             target = repariable;
           }
         }
+        creep.say(globals.MSG_WORKING);
         if (creep.repair(target) === ERR_NOT_IN_RANGE) {
           creep.moveTo(target, { visualizePathStyle: { stroke: "#0f111a" } });
         }
@@ -41,8 +43,8 @@ export default {
       const source: Source | null | undefined = creep.pos.findClosestByRange(FIND_SOURCES);
 
       if (source instanceof Source) {
+        creep.say(globals.MSG_HARVEST);
         if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.say(globals.MSG_HARVEST);
           creep.moveTo(source, { visualizePathStyle: { stroke: "#fe4151" } });
         }
       } else {
