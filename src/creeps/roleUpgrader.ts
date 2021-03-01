@@ -17,9 +17,12 @@ export default {
         }
       }
     } else {
-      const source: Source | null | undefined = creep.room.controller?.pos.findClosestByRange(FIND_SOURCES);
+      if (!creep.room.controller) {
+        return;
+      }
+      const source: Source | null = creep.room.controller.pos.findClosestByRange(FIND_SOURCES);
 
-      if (source instanceof Source) {
+      if (source) {
         creep.say(globals.MSG_HARVEST);
         if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
           creep.moveTo(source, { visualizePathStyle: { stroke: "#0f111a" } });
