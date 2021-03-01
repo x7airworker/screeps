@@ -28,16 +28,9 @@ export default {
           creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
         }
       } else if (repairables.length) {
-        let target: AnyStructure = repairables[0];
-        for (const repariable of repairables) {
-          if (creep.pos.getRangeTo(repariable) < creep.pos.getRangeTo(target)) {
-            target = repariable;
-          }
-        }
-
         creep.say(globals.MSG_WORKING);
-        if (creep.repair(target) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(target, { visualizePathStyle: { stroke: "#0f111a" } });
+        if (creep.repair(repairables[0]) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(repairables[0], { visualizePathStyle: { stroke: "#0f111a" } });
         }
       }
     } else {
