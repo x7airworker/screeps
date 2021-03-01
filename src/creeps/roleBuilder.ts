@@ -12,7 +12,13 @@ export default {
     if (creep.memory.working) {
       const structure: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
-      const repairables: AnyStructure[] = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
+      let repairables: AnyStructure[] | null = creep.room.find(FIND_STRUCTURES, {
+        filter: c => c.hits < c.hitsMax && c.hitsMax - c.hits < creep.store.getCapacity() * 2,
+      });
+
+      if (!repairables) {
+        repairables = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
+      }
 
       repairables.sort((a, b) => a.hits - b.hits);
 
@@ -40,7 +46,7 @@ export default {
           creep.moveTo(source, { visualizePathStyle: { stroke: "#fe4151" } });
         }
       } else {
-        creep.say(globals.MSG_ERR_SOURCE_NOT_FOUND);
+        creep.say(globals.MSG_ERR_NOT_FOUND);
       }
     }
   },
