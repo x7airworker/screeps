@@ -1,7 +1,7 @@
 import globals from "../core/globals";
 import uuid from "../core/uuid";
 
-const body: BodyPartConstant[] = [WORK, WORK, CARRY, CARRY, MOVE];
+const body: BodyPartConstant[] = [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
 
 export default function (): void {
   // Spawn new harvesters
