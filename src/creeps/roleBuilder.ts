@@ -19,9 +19,7 @@ export default {
         .find(FIND_STRUCTURES, {
           filter: c => c.hits < c.hitsMax,
         })
-        .sort((a, b) => {
-          return a.hitsMax - b.hitsMax;
-        });
+        .sort((a, b) => a.hits - b.hits);
 
       if (structure) {
         creep.say(globals.MSG_WORKING);
