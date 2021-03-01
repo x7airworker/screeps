@@ -1,14 +1,19 @@
 import globals from "../core/globals";
 import uuid from "../core/uuid";
 
-const body: BodyPartConstant[] = [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+let body: BodyPartConstant[];
+
+if (Game.rooms.W13N33.energyCapacityAvailable >= 800) {
+  body = [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE];
+} else {
+  body = [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+}
 
 export default function (): void {
-  // Spawn new harvesters
   if (
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_HARVESTER } })
-      .size() < 3
+      .size() < 5
   )
     Game.spawns.Spawn1.spawnCreep(body, `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
