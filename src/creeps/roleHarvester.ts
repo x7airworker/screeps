@@ -21,6 +21,7 @@ export default {
         }
       }
     } else {
+      // TODO: FIX THIS ABOMINATION
       const targets: any[] | undefined = creep.room.find<any>(FIND_STRUCTURES, {
         filter: struct => {
           const struct2 = struct as any;
