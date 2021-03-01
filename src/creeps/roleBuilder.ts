@@ -16,7 +16,11 @@ export default {
 
       repairables.sort((a, b) => a.hits - b.hits);
 
-      if (repairables.length) {
+      if (structure) {
+        if (creep.build(structure) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
+        }
+      } else if (repairables.length) {
         let target: AnyStructure = repairables[0];
         for (const repariable of repairables) {
           if (creep.pos.getRangeTo(repariable) < creep.pos.getRangeTo(target)) {
@@ -25,10 +29,6 @@ export default {
         }
         if (creep.repair(target) === ERR_NOT_IN_RANGE) {
           creep.moveTo(target, { visualizePathStyle: { stroke: "#0f111a" } });
-        }
-      } else if (structure) {
-        if (creep.build(structure) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
         }
       }
     } else {
