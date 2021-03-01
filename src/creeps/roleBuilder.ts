@@ -12,9 +12,23 @@ export default {
     if (creep.memory.working) {
       const structure: ConstructionSite | null = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
 
+      const repairables: AnyStructure[] = creep.room.find(FIND_STRUCTURES, { filter: c => c.hits < c.hitsMax });
+
+      repairables.sort((a, b) => a.hits - b.hits);
+
       if (structure) {
         if (creep.build(structure) === ERR_NOT_IN_RANGE) {
           creep.moveTo(structure, { visualizePathStyle: { stroke: "#fe4151" } });
+        }
+      } else if (repairables.length) {
+        let target: AnyStructure = repairables[0];
+        for (const repariable of repairables) {
+          if (creep.pos.getRangeTo(repariable) < creep.pos.getRangeTo(target)) {
+            target = repariable;
+          }
+        }
+        if (creep.repair(target) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(target, { visualizePathStyle: { stroke: "#0f111a" } });
         }
       }
     } else {
