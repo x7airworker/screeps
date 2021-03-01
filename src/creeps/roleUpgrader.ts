@@ -20,12 +20,12 @@ export default {
       const source: Source | null | undefined = creep.room.controller?.pos.findClosestByRange(FIND_SOURCES);
 
       if (source instanceof Source) {
+        creep.say(globals.MSG_HARVEST);
         if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.say(globals.MSG_HARVEST);
           creep.moveTo(source, { visualizePathStyle: { stroke: "#0f111a" } });
         }
       } else {
-        creep.say(globals.MSG_ERR_SOURCE_NOT_FOUND);
+        creep.say(globals.MSG_ERR_NOT_FOUND);
       }
     }
   },
