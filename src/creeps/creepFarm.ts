@@ -1,7 +1,9 @@
 import globals from "core/globals";
 
 export default function (creep: Creep, color: string): void {
-  const source: Source | null = creep.pos.findClosestByPath(FIND_SOURCES);
+  const source: Source | null = creep.pos.findClosestByPath(FIND_SOURCES, {
+    filter: s => s.energy > creep.store.getFreeCapacity(),
+  });
 
   if (!source) {
     creep.say(globals.MSG_ERR_NOT_FOUND);
