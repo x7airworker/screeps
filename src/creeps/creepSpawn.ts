@@ -1,12 +1,30 @@
 import globals from "../core/globals";
 import uuid from "../core/uuid";
 
-let body: BodyPartConstant[];
+const bodyBase: BodyPartConstant[] = [WORK, CARRY, MOVE];
 
-if (Game.rooms.W13N33.energyCapacityAvailable >= 800) {
-  body = [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE];
-} else {
-  body = [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+function composeBody(): BodyPartConstant[] {
+  const energyCapacityAvailable = Game.rooms.W13N33.energyAvailable;
+  const bodyNew = bodyBase;
+  let pushCost = 0;
+  for (const part of bodyBase) {
+    pushCost += BODYPART_COST[part];
+  }
+
+  while (energyCapacityAvailable > pushCost) {
+    for (const part of bodyBase) {
+      pushCost += BODYPART_COST[part];
+      if (energyCapacityAvailable <= pushCost) {
+        return bodyNew;
+      }
+      bodyNew.push(part);
+    }
+  }
+  if (!bodyNew.length) {
+    throw new Error();
+  }
+
+  return bodyNew;
 }
 
 export default function (): void {
@@ -15,7 +33,7 @@ export default function (): void {
       .filter({ memory: { role: globals.ROLE_HARVESTER } })
       .size() < 5
   )
-    Game.spawns.Spawn1.spawnCreep(body, `Harvester_${uuid()}`, {
+    Game.spawns.Spawn1.spawnCreep(composeBody(), `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
   // Spawn new upgraders
@@ -24,7 +42,7 @@ export default function (): void {
       .filter({ memory: { role: globals.ROLE_UPGRADER } })
       .size() < 3
   )
-    Game.spawns.Spawn1.spawnCreep(body, `Upgrader_${uuid()}`, {
+    Game.spawns.Spawn1.spawnCreep(composeBody(), `Upgrader_${uuid()}`, {
       memory: { role: globals.ROLE_UPGRADER, working: false },
     });
   // Spawn new builders
@@ -33,7 +51,7 @@ export default function (): void {
       .filter({ memory: { role: globals.ROLE_BUILDER } })
       .size() < 10
   )
-    Game.spawns.Spawn1.spawnCreep(body, `Builder_${uuid()}`, {
+    Game.spawns.Spawn1.spawnCreep(composeBody(), `Builder_${uuid()}`, {
       memory: { role: globals.ROLE_BUILDER, working: false },
     });
 }
