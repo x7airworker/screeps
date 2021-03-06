@@ -21,7 +21,8 @@ function composeBody(): BodyPartConstant[] {
     }
   }
   if (!bodyNew.length) {
-    throw new Error();
+    // eslint-disable-next-line no-console
+    console.error("Couldn't compose new body!");
   }
 
   return bodyNew;
