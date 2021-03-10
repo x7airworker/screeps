@@ -7,13 +7,13 @@ for (const part of bodyBase) {
   costBase += BODYPART_COST[part];
 }
 
-function composeBody(): BodyPartConstant[] {
-  const energyCapacityAvailable = Game.rooms.W13N33.energyAvailable;
+function composeBody(spawn: StructureSpawn): BodyPartConstant[] {
+  if (spawn.room.energyAvailable <= costBase) {
+    return bodyBase;
+  }
+  const energyCapacityAvailable = spawn.room.energyAvailable;
   const bodyNew = bodyBase;
   let pushCost = costBase;
-  for (const part of bodyBase) {
-    pushCost += BODYPART_COST[part];
-  }
 
   console.log("-------------------------------\nInitial values:\n-------------------------------");
   console.log(`Base body: ${bodyBase.toString()}`);
@@ -43,6 +43,12 @@ function composeBody(): BodyPartConstant[] {
 }
 
 export default function (spawn: StructureSpawn): void {
+  // Spawn an emergency harvester if no creeps can be found
+  if (!spawn.room.find(FIND_MY_CREEPS).length) {
+    Game.spawns.spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
+      memory: { role: globals.ROLE_HARVESTER, working: false },
+    });
+  }
   // Check if energy capacity is high enough to spawn a base creep
   if (spawn.room.energyAvailable < costBase) {
     return;
@@ -52,7 +58,7 @@ export default function (spawn: StructureSpawn): void {
       .filter({ memory: { role: globals.ROLE_HARVESTER } })
       .size() < 5
   )
-    Game.spawns.Spawn1.spawnCreep(composeBody(), `Harvester_${uuid()}`, {
+    spawn.spawnCreep(composeBody(spawn), `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
   // Spawn new upgraders
@@ -61,7 +67,7 @@ export default function (spawn: StructureSpawn): void {
       .filter({ memory: { role: globals.ROLE_UPGRADER } })
       .size() < 3
   )
-    Game.spawns.Spawn1.spawnCreep(composeBody(), `Upgrader_${uuid()}`, {
+    spawn.spawnCreep(composeBody(spawn), `Upgrader_${uuid()}`, {
       memory: { role: globals.ROLE_UPGRADER, working: false },
     });
   // Spawn new builders
@@ -70,7 +76,7 @@ export default function (spawn: StructureSpawn): void {
       .filter({ memory: { role: globals.ROLE_BUILDER } })
       .size() < 10
   )
-    Game.spawns.Spawn1.spawnCreep(composeBody(), `Builder_${uuid()}`, {
+    spawn.spawnCreep(composeBody(spawn), `Builder_${uuid()}`, {
       memory: { role: globals.ROLE_BUILDER, working: false },
     });
 }
