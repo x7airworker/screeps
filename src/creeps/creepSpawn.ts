@@ -50,6 +50,7 @@ export default function (spawn: StructureSpawn): void {
     spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
+    return;
   }
   // Check if energy capacity is high enough to spawn a base creep
   if (spawn.room.energyAvailable < costBase) {
