@@ -19,6 +19,7 @@ function composeBody(spawn: StructureSpawn): BodyPartConstant[] {
   console.log(`Base body: ${bodyBase.toString()}`);
   console.log(`Push cost: ${pushCost}`);
   console.log(`New body: ${bodyNew.toString()}`);
+  console.log(`Available energy: ${energyCapacityAvailable}`);
 
   while (energyCapacityAvailable > pushCost) {
     for (const part of bodyBase) {
@@ -46,7 +47,7 @@ export default function (spawn: StructureSpawn): void {
   // Spawn an emergency harvester if no creeps can be found
   if (!spawn.room.find(FIND_MY_CREEPS).length) {
     console.log(`Spawning emergency creep`);
-    Game.spawns.spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
+    spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
   }
