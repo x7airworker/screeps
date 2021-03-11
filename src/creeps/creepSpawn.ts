@@ -45,6 +45,7 @@ function composeBody(spawn: StructureSpawn): BodyPartConstant[] {
 export default function (spawn: StructureSpawn): void {
   // Spawn an emergency harvester if no creeps can be found
   if (!spawn.room.find(FIND_MY_CREEPS).length) {
+    console.log(`Spawning emergency creep`);
     Game.spawns.spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
