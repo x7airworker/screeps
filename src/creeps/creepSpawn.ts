@@ -60,26 +60,29 @@ export default function (spawn: StructureSpawn): void {
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_HARVESTER } })
       .size() < 5
-  )
+  ) {
     spawn.spawnCreep(composeBody(spawn), `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
+  }
   // Spawn new upgraders
   else if (
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_UPGRADER } })
       .size() < 3
-  )
+  ) {
     spawn.spawnCreep(composeBody(spawn), `Upgrader_${uuid()}`, {
       memory: { role: globals.ROLE_UPGRADER, working: false },
     });
+  }
   // Spawn new builders
   else if (
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_BUILDER } })
       .size() < 10
-  )
+  ) {
     spawn.spawnCreep(composeBody(spawn), `Builder_${uuid()}`, {
       memory: { role: globals.ROLE_BUILDER, working: false },
     });
+  }
 }
