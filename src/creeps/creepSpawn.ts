@@ -8,12 +8,13 @@ for (const part of bodyBase) {
 }
 
 function composeBody(spawn: StructureSpawn): BodyPartConstant[] {
-  if (spawn.room.energyAvailable <= costBase) {
-    return bodyBase;
-  }
   const energyCapacityAvailable = spawn.room.energyAvailable;
-  const bodyNew = bodyBase;
+  const bodyNew: BodyPartConstant[] = [];
   let pushCost = costBase;
+
+  bodyBase.forEach(part => {
+    bodyNew.push(part);
+  });
 
   console.log("-------------------------------\nInitial values:\n-------------------------------");
   console.log(`Base body: ${bodyBase.toString()}`);
@@ -47,9 +48,11 @@ export default function (spawn: StructureSpawn): void {
   // Spawn an emergency harvester if no creeps can be found
   if (!spawn.room.find(FIND_MY_CREEPS).length) {
     console.log(`Spawning emergency creep`);
-    spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
+    const res = spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
       memory: { role: globals.ROLE_HARVESTER, working: false },
     });
+    console.log(`The return code is: ${res}`);
+
     return;
   }
   // Check if energy capacity is high enough to spawn a base creep
