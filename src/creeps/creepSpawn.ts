@@ -69,7 +69,8 @@ export default function (spawn: StructureSpawn): void {
   else if (
     _(Game.creeps)
       .filter({ memory: { role: globals.ROLE_BUILDER } })
-      .size() < 5
+      .size() < 5 ||
+    spawn.room.energyAvailable === spawn.room.energyCapacityAvailable
   ) {
     spawn.spawnCreep(composeBody(spawn), `Builder_${uuid()}`, {
       memory: { role: globals.ROLE_BUILDER, working: false },
