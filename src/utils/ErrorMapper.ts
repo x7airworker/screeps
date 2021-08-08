@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SourceMapConsumer } from "source-map";
 
 export class ErrorMapper {
@@ -39,7 +40,7 @@ export class ErrorMapper {
       if (match[2] === "main") {
         const pos = this.consumer.originalPositionFor({
           column: parseInt(match[4], 10),
-          line: parseInt(match[3], 10)
+          line: parseInt(match[3], 10),
         });
 
         if (pos.line != null) {

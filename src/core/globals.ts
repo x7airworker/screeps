@@ -8,7 +8,4 @@ export default {
   MSG_ERR_NOT_FOUND: "⏳",
   MSG_HARVEST: "⛏",
   MSG_WORKING: "🛠",
-  CONTROLLED_ROOMS: {
-    MAIN: "W13N33",
-  },
 };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "//": "If you add or change the names of destinations in screeps.json, make sure you update these scripts to reflect the changes",
   "scripts": {
-    "lint": "eslint \"src/**/*.ts\"",
+    "lint": "eslint ./src --max-warnings 0 --ext .ts",
     "build": "rollup -c",
     "push-main": "rollup -c --environment DEST:main",
     "push-pserver": "rollup -c --environment DEST:pserver",
@@ -29,9 +29,6 @@
     "url": "https://github.com/screepers/screeps-typescript-starter/issues"
   },
   "homepage": "https://github.com/screepers/screeps-typescript-starter#readme",
-  "engines": {
-    "node": "10.x || 12.x || 15.x || 14.x"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-node-resolve": "^7.1.3",
