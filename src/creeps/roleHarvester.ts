@@ -19,13 +19,12 @@ export default {
     } else {
       const targets: any[] = creep.room.find<any>(FIND_STRUCTURES, {
         filter: struct => {
-          if (struct instanceof Creep) {
-            if (struct.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-                return struct;
-            } else {
-                return;
+            if (struct instanceof Creep) {
+                if (struct.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+                    return true;
+                }
             }
-          }
+            return false;
         },
       });
 
