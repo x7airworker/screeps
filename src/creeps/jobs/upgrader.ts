@@ -1,9 +1,8 @@
 import globals from "core/globals";
-import creepFailsafe from "./creepFailsafe";
-import creepFarm from "./creepFarm";
+import creepFailsafe from "../creepFailsafe";
+import creepFarm from "../creepFarm";
 
-export default {
-  run(creep: Creep): void {
+export default function (creep: Creep) {
     creepFailsafe(creep);
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
       creep.memory.working = false;
@@ -22,5 +21,4 @@ export default {
         }
       }
     }
-  },
-};
+}

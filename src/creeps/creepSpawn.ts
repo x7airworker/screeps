@@ -1,5 +1,5 @@
-import globals from "../core/globals";
 import uuid from "../core/uuid";
+import { JobType } from "./jobs";
 
 const bodyBase: BodyPartConstant[] = [WORK, CARRY, MOVE];
 let costBase = 0;
@@ -37,7 +37,7 @@ export default function (spawn: StructureSpawn): void {
   // Spawn an emergency harvester if no creeps can be found
   if (!spawn.room.find(FIND_MY_CREEPS).length) {
     spawn.spawnCreep(bodyBase, `Harvester_${uuid()}`, {
-      memory: { role: globals.ROLE_HARVESTER, working: false },
+      memory: { job: JobType.HARVESTER, working: false },
     });
 
     return;
@@ -48,32 +48,32 @@ export default function (spawn: StructureSpawn): void {
   }
   if (
     _(Game.creeps)
-      .filter({ memory: { role: globals.ROLE_HARVESTER } })
+      .filter({ memory: { role: JobType.HARVESTER } })
       .size() < 3
   ) {
     spawn.spawnCreep(composeBody(spawn), `Harvester_${uuid()}`, {
-      memory: { role: globals.ROLE_HARVESTER, working: false },
+      memory: { job: JobType.HARVESTER, working: false },
     });
   }
   // Spawn new upgraders
   else if (
     _(Game.creeps)
-      .filter({ memory: { role: globals.ROLE_UPGRADER } })
+      .filter({ memory: { role: JobType.UPGRADER } })
       .size() < 3
   ) {
     spawn.spawnCreep(composeBody(spawn), `Upgrader_${uuid()}`, {
-      memory: { role: globals.ROLE_UPGRADER, working: false },
+      memory: { job: JobType.UPGRADER, working: false },
     });
   }
   // Spawn new builders
   else if (
     _(Game.creeps)
-      .filter({ memory: { role: globals.ROLE_BUILDER } })
+      .filter({ memory: { role: JobType.BUILDER } })
       .size() < 5 ||
     spawn.room.energyAvailable === spawn.room.energyCapacityAvailable
   ) {
     spawn.spawnCreep(composeBody(spawn), `Builder_${uuid()}`, {
-      memory: { role: globals.ROLE_BUILDER, working: false },
+      memory: { job: JobType.BUILDER, working: false },
     });
   }
 }

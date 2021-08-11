@@ -1,25 +1,13 @@
-import globals from "core/globals";
-import roleBuilder from "./roleBuilder";
-import roleHarvester from "./roleHarvester";
-import roleUpgrader from "./roleUpgrader";
+import JOB_FUNCTIONS from "./jobs";
 
 export default function (): void {
   for (const creepName in Game.creeps) {
     const creep = Game.creeps[creepName];
 
-    switch (creep.memory.role) {
-      case globals.ROLE_HARVESTER:
-        roleHarvester.run(creep);
-        break;
-      case globals.ROLE_UPGRADER:
-        roleUpgrader.run(creep);
-        break;
-      case globals.ROLE_BUILDER:
-        roleBuilder.run(creep);
-        break;
-
-      default:
-        break;
+    if (creep.memory.job) {
+        const jobFunction = JOB_FUNCTIONS[creep.memory.job];
+        if (jobFunction)
+            jobFunction(creep);
     }
   }
 }

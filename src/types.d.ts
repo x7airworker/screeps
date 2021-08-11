@@ -2,7 +2,7 @@
 
 // memory extension samples
 interface CreepMemory {
-  role?: string;
+  job?: string;
   room?: string;
   working?: boolean;
 }

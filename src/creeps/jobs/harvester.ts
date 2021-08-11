@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import globals from "core/globals";
-import creepFailsafe from "./creepFailsafe";
-import creepFarm from "./creepFarm";
+import creepFailsafe from "../creepFailsafe";
+import creepFarm from "../creepFarm";
 
-export default {
-  run(creep: Creep): void {
+export default function (creep: Creep) {
     creepFailsafe(creep);
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
       creep.memory.working = false;
     }
     if (!creep.memory.working && creep.store.getFreeCapacity() === 0) {
-      creep.memory.working = true;
+        creep.moveTo(Game.spawns[0]);
     }
 
     if (!creep.memory.working) {
@@ -35,5 +34,4 @@ export default {
         }
       }
     }
-  },
 };
