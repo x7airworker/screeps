@@ -9,8 +9,8 @@ export default function (creep: Creep) {
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
       creep.memory.working = false;
     }
-    if (!creep.memory.working && creep.store.getFreeCapacity() === 0) {
-        creep.moveTo(Game.spawns[0]);
+    if (creep.store.getFreeCapacity() == 0) {
+        creep.memory.working = false;
     }
 
     if (!creep.memory.working) {
