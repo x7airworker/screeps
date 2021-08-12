@@ -4,11 +4,8 @@ import creepFarm from "../creepFarm";
 
 export default function (creep: Creep) {
     creepFailsafe(creep);
-    if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
+    if (creep.memory.working && (creep.store[RESOURCE_ENERGY] === 0 || creep.store.getFreeCapacity() === 0)) {
       creep.memory.working = false;
-    }
-    if (!creep.memory.working && creep.store.getFreeCapacity() === 0) {
-      creep.memory.working = true;
     }
 
     if (!creep.memory.working) {

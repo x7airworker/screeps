@@ -1,20 +1,23 @@
-// example declaration file - remove these and add your own custom typings
+import { CreepState } from "creeps/creepState";
 
-// memory extension samples
-interface CreepMemory {
-  job?: string;
-  room?: string;
-  working?: boolean;
+declare global {
+    interface CreepMemory {
+        job?: string;
+        room?: string;
+        working?: boolean;
+        state: CreepState;
+    }
+
+    interface Memory {
+        uuid: number;
+        log: any;
+    }
 }
 
-interface Memory {
-  uuid: number;
-  log: any;
-}
 
 // `global` extension samples
 declare namespace NodeJS {
-  interface Global {
-    log: any;
-  }
+    interface Global {
+        log: any;
+    }
 }
