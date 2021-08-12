@@ -94,5 +94,5 @@ export default function (spawn: StructureSpawn): void {
             .filter({ memory: { job: JobType.BUILDER } })
             .size() < 5 ||
         spawn.room.energyAvailable === spawn.room.energyCapacityAvailable
-    ) spawnBuilder(spawn);
+    ) { /* spawnBuilder(spawn); */ }
 }
