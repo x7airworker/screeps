@@ -77,6 +77,7 @@ export default function (spawn: StructureSpawn): void {
         return;
     }
 
+    // Spawn new harvesters
     if (
         _(Game.creeps)
             .filter({ memory: { job: JobType.HARVESTER } })
@@ -92,7 +93,6 @@ export default function (spawn: StructureSpawn): void {
     else if (
         _(Game.creeps)
             .filter({ memory: { job: JobType.BUILDER } })
-            .size() < 1 ||
-        spawn.room.energyAvailable === spawn.room.energyCapacityAvailable
+            .size() < 1
     ) spawnBuilder(spawn);
 }
