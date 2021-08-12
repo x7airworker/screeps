@@ -92,7 +92,7 @@ export default function (spawn: StructureSpawn): void {
     else if (
         _(Game.creeps)
             .filter({ memory: { job: JobType.BUILDER } })
-            .size() < 5 ||
+            .size() < 1 ||
         spawn.room.energyAvailable === spawn.room.energyCapacityAvailable
-    ) { /* spawnBuilder(spawn); */ }
+    ) spawnBuilder(spawn);
 }
